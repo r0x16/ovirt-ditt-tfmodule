@@ -15,14 +15,14 @@ resource "ovirt_vm" "virtual_machine" {
   os_type                   = var.os_type
 
   provisioner "local-exec" {
-    when = create
-    command = "ansible-playbook ${path.module}/ansible/playbook_installOvirtDependencies.yml"
+    when       = create
+    command    = "ansible-playbook ${path.module}/ansible/playbook_installOvirtDependencies.yml"
     on_failure = fail
   }
 
   provisioner "local-exec" {
-    when = create
-    command = "ansible-playbook ${path.module}/ansible/playbook_ovirtVMInitialization.yml"
+    when       = create
+    command    = "ansible-playbook ${path.module}/ansible/playbook_ovirtVMInitialization.yml"
     on_failure = fail
   }
 }
@@ -33,6 +33,6 @@ data "ovirt_templates" "vm_template" {
 }
 
 resource "ovirt_vm_start" "test" {
-  vm_id = ovirt_vm.virtual_machine.id
+  vm_id         = ovirt_vm.virtual_machine.id
   stop_behavior = "stop"
 }
