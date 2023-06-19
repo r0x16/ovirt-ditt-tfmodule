@@ -3,7 +3,7 @@ resource "ovirt_vm" "virtual_machine" {
   comment                   = var.comment
   cluster_id                = var.cluster_id
   template_id               = tolist(data.ovirt_templates.vm_template.templates)[0].id
-  clone                     = var.clone
+  clone                     = true
   cpu_cores                 = var.cpu_cores
   cpu_sockets               = var.cpu_sockets
   cpu_threads               = var.cpu_threads
