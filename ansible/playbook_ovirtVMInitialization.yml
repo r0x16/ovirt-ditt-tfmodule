@@ -1,0 +1,60 @@
+---
+- name: Initialize oVirt Virtual Machine
+  hosts: localhost
+  gather_facts: no
+  tasks:
+    - name: Load local variables
+      include_vars:
+        file: ./variables_ovirtVMInitialization.yml
+    
+    - name: Authenticate to the oVirt API
+      ovirt_auth:
+        url: "{{ env.ovirt_engine_url }}"
+        username: "{{ env.ovirt_username }}"
+        password: "{{ env.ovirt_password }}"
+        ca_file: "{{ env.ovirt_ca_file }}"
+    
+    - name: Wait for VM to be ready
+      ovirt_vm_info:
+        auth: "{{ ovirt_auth }}"
+        pattern: "name={{ vm.name }}"
+      register: result
+      until: (result.ovirt_vms | length > 0) and (result.ovirt_vms[0].status != 'image_locked')
+      retries: 60 # Wait 10 minutes until VM is cloned
+      delay: 10
+    
+    - name: Get VM disk collection
+      ovirt_disk_info:
+        auth: "{{ ovirt_auth }}"
+        pattern: "vm_names={{ vm.name }}"
+      register: var_ovirt_disks
+    
+    - name: Migrate VM disks to new storage domain
+      ovirt_disk:
+        auth: "{{ ovirt_auth }}"
+        id: "{{ item.id }}"
+        storage_domain: "{{ vm.storage_domain }}"
+      loop: "{{ var_ovirt_disks.ovirt_disks }}"
+      loop_control:
+        label: "{{ item.id }}"
+    
+    - name: Set cloud-init configuration
+      ovirt_vm:
+        auth: "{{ ovirt_auth }}"
+        name: "{{ vm.name }}"
+        cloud_init:
+          dns_servers: "{{ vm.dns_servers }}"
+          host_name: "{{ vm.hostname }}"
+        cloud_init_nics:
+        - nic_name: "{{ vm.nic_name }}"
+          nic_boot_protocol: static
+          nic_ip_address: "{{ vm.ip_address }}"
+          nic_netmask: "{{ vm.netmask }}"
+          nic_gateway: "{{ vm.gateway }}"
+        state: running
+    
+    - name: Shutdown VM when cloud-init is done
+      ovirt_vm:
+        auth: "{{ ovirt_auth }}"
+        name: "{{ vm.name }}"
+        state: stopped

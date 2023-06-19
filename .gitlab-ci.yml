@@ -1,0 +1,6 @@
+variables:
+  TERRAFORM_MODULE_NAME: tf-ovirt-vm
+  TERRAFORM_MODULE_SYSTEM: ovirt
+
+include:
+  template: Terraform-Module.gitlab-ci.yml

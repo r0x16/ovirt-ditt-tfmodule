@@ -1,0 +1,15 @@
+---
+env:
+  ovirt_engine_url: "{{ lookup('env', 'OVIRT_ENGINE_URL') }}"
+  ovirt_username: "{{ lookup('env', 'OVIRT_USERNAME') }}"
+  ovirt_password: "{{ lookup('env', 'OVIRT_PASSWORD') }}"
+  ovirt_ca_file: "{{ lookup('env', 'OVIRT_CA_FILE') }}"
+vm:
+  name: "{{ lookup('env', 'VM_NAME') }}"
+  storage_domain: "{{ lookup('env', 'VM_STORAGE_DOMAIN') }}"
+  hostname: "{{ lookup('env', 'VM_HOSTNAME') }}"
+  dns_servers: "{{ lookup('env', 'VM_DNS_SERVERS') }}"
+  nic_name: "{{ lookup('env', 'VM_NIC_NAME') }}"
+  ip_address: "{{ lookup('env', 'VM_IP_ADDRESS') }}"
+  netmask: "{{ lookup('env', 'VM_NETMASK') }}"
+  gateway: "{{ lookup('env', 'VM_GATEWAY') }}"
