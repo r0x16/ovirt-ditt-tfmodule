@@ -78,3 +78,41 @@ variable "os_type" {
   description = "The OS type of the VM"
   default     = "ubuntu_14_04"
 }
+
+# Variables for the VM initialization playbook
+
+variable "storage_domain" {
+  type        = string
+  description = "The name of the storage domain where the VM will be created"
+}
+
+variable "hostname" {
+  type        = string
+  description = "The hostname of the VM"
+}
+
+variable "dns" {
+  type        = list(string)
+  description = "List of DNS servers for the VM"
+}
+
+variable "nic_name" {
+  type        = string
+  description = "The name of the NIC for the VM"
+}
+
+variable "ip" {
+  type        = string
+  description = "The IP address of the VM"
+  default     = "ens3"
+}
+
+variable "netmask" {
+  type        = string
+  description = "The netmask of the VM"
+}
+
+variable "gateway" {
+  type        = string
+  description = "The gateway of the VM"
+}
