@@ -99,12 +99,12 @@ variable "dns" {
 variable "nic_name" {
   type        = string
   description = "The name of the NIC for the VM"
+  default     = "ens3"
 }
 
 variable "ip" {
   type        = string
   description = "The IP address of the VM"
-  default     = "ens3"
 }
 
 variable "netmask" {
