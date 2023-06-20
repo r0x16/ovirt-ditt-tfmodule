@@ -92,7 +92,7 @@ variable "hostname" {
 }
 
 variable "dns" {
-  type        = list(string)
+  type        = string
   description = "List of DNS servers for the VM"
 }
 
