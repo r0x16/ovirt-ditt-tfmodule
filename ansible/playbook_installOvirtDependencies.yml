@@ -1,8 +1,7 @@
 ---
 - name: Install oVirt API dependences
-  host: localhost
+  hosts: localhost
   gather_facts: no
-  become: yes
   tasks:
     - name: Install dependences to connect to the oVirt API
       apt:
