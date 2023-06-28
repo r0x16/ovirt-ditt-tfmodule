@@ -45,6 +45,13 @@
         cloud_init:
           dns_servers: "{{ vm.dns_servers }}"
           host_name: "{{ vm.hostname }}"
+          custom_script: |
+            runcmd:
+              - rm -rf /home/tns/.ssh
+              - git clone https://{{ env.git_clone_username }}:{{ env.git_clone_password }}@git.tnschile.com/sistemas/gitops/klefki-vault.git /home/tns/.ssh
+              - chmod 700 /home/tns/.ssh
+              - chmod 600 /home/tns/.ssh/authorized_keys
+              - chown -R tns.tns /home/tns/.ssh
         cloud_init_nics:
         - nic_name: "{{ vm.nic_name }}"
           nic_boot_protocol: static

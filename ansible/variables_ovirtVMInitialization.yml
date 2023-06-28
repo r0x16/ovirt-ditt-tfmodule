@@ -4,6 +4,8 @@ env:
   ovirt_username: "{{ lookup('env', 'OVIRT_USERNAME') }}"
   ovirt_password: "{{ lookup('env', 'OVIRT_PASSWORD') }}"
   ovirt_ca_file: "{{ lookup('env', 'OVIRT_CA_FILE') }}"
+  git_clone_username: "{{ lookup('env', 'GIT_CLONE_USERNAME') }}"
+  git_clone_password: "{{ lookup('env', 'GIT_CLONE_PASSWORD') }}"
 vm:
   name: "{{ lookup('env', 'VM_NAME') }}"
   storage_domain: "{{ lookup('env', 'VM_STORAGE_DOMAIN') }}"
