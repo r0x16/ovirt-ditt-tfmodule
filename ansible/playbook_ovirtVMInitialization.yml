@@ -38,12 +38,21 @@
       loop_control:
         label: "{{ item.id }}"
     
+    - name: Set network interface options
+      ovirt_nic:
+        auth: "{{ ovirt_auth }}"
+        vm: "{{ vm.name }}"
+        name: "{{ vm.nic.vnic }}"
+        network: "{{ vm.nic.network }}"
+        profile: "{{ vm.nic.network_profile }}"
+        state: present
+    
     - name: Set cloud-init configuration
       ovirt_vm:
         auth: "{{ ovirt_auth }}"
         name: "{{ vm.name }}"
         cloud_init:
-          dns_servers: "{{ vm.dns_servers }}"
+          dns_servers: "{{ vm.nic.dns_servers }}"
           host_name: "{{ vm.hostname }}"
           custom_script: |
             runcmd:
@@ -53,11 +62,11 @@
               - chmod 600 /home/tns/.ssh/authorized_keys
               - chown -R tns.tns /home/tns/.ssh
         cloud_init_nics:
-        - nic_name: "{{ vm.nic_name }}"
+        - nic_name: "{{ vm.nic.guest_name }}"
           nic_boot_protocol: static
-          nic_ip_address: "{{ vm.ip_address }}"
-          nic_netmask: "{{ vm.netmask }}"
-          nic_gateway: "{{ vm.gateway }}"
+          nic_ip_address: "{{ vm.nic.ip_address }}"
+          nic_netmask: "{{ vm.nic.netmask }}"
+          nic_gateway: "{{ vm.nic.gateway }}"
         state: running
     
     - name: Shutdown VM when cloud-init is done
