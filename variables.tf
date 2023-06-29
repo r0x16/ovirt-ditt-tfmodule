@@ -91,14 +91,34 @@ variable "hostname" {
   description = "The hostname of the VM"
 }
 
+# Network related variables
+
+variable "network" {
+  type        = string
+  description = "The name of the network where the VM will be connected"
+  default     = "ovirtmgmt"
+}
+
+variable "network_profile" {
+  type        = string
+  description = "The name of the network profile for the VM"
+  default     = "ovirtmgmt"
+}
+
+variable "vnic_name" {
+  type        = string
+  description = "The name of the vNIC for the VM"
+  default     = "nic1"
+}
+
 variable "dns" {
   type        = string
   description = "List of DNS servers for the VM"
 }
 
-variable "nic_name" {
+variable "guest_nic_name" {
   type        = string
-  description = "The name of the NIC for the VM"
+  description = "The name of the Guest NIC for the VM"
   default     = "ens3"
 }
 

@@ -26,14 +26,17 @@ resource "ovirt_vm" "virtual_machine" {
     on_failure = fail
 
     environment = {
-      VM_NAME           = var.vm_name
-      VM_STORAGE_DOMAIN = var.storage_domain
-      VM_HOSTNAME       = var.hostname
-      VM_DNS_SERVERS    = var.dns
-      VM_NIC_NAME       = var.nic_name
-      VM_IP_ADDRESS     = var.ip
-      VM_NETMASK        = var.netmask
-      VM_GATEWAY        = var.gateway
+      VM_NAME            = var.vm_name
+      VM_STORAGE_DOMAIN  = var.storage_domain
+      VM_HOSTNAME        = var.hostname
+      VM_NETWORK         = var.network
+      VM_NETWORK_PROFILE = var.network_profile
+      VM_VNIC_NAME       = var.vnic_name
+      VM_DNS_SERVERS     = var.dns
+      VM_GUESTNIC_NAME   = var.guest_nic_name
+      VM_IP_ADDRESS      = var.ip
+      VM_NETMASK         = var.netmask
+      VM_GATEWAY         = var.gateway
     }
   }
 }
