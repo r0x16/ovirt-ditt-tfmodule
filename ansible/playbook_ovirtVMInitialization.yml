@@ -61,6 +61,7 @@
               - chmod 700 /home/tns/.ssh
               - chmod 600 /home/tns/.ssh/authorized_keys
               - chown -R tns.tns /home/tns/.ssh
+              - echo "tns ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/tns-sudo
         cloud_init_nics:
         - nic_name: "{{ vm.nic.guest_name }}"
           nic_boot_protocol: static
